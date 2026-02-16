@@ -1,0 +1,9 @@
+{
+    "packages": {
+        "utils": {
+            "version": "1.2.0",
+            "url": "utils.snask",
+            "description": "Biblioteca padrão de utilitários (Constantes e Funções) para Snask."
+        }
+    }
+}
