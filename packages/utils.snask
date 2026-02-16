@@ -1,6 +1,7 @@
-// utils.snask - Biblioteca de utilitários v1.2
+// utils.snask - Biblioteca de utilitários v1.2.0
 let VERSAO_UTILS = 1.2;
-let PI = 3.14159;
+let PI = 3.1415926535;
+let E  = 2.7182818284;
 
 fun somar(a, b) {
     return a + b;
@@ -13,5 +14,3 @@ fun calcular_area(raio) {
 fun saudar(nome) {
     print("Ola,", nome, "! Bem-vindo ao Snask.");
 }
-
-print("Snask Utils v1.2 - Metodos Nativo Carregados!");

@@ -5,5 +5,3 @@ fun read(path) { return sfs_read(path); }
 fun write(path, content) { return sfs_write(path, content); }
 fun delete(path) { return sfs_delete(path); }
 fun exists(path) { return sfs_exists(path); }
-
-print("SFS (Snask File System) v1.2 - Wrappers Seguros Carregados!");
