@@ -1,0 +1,5 @@
+{
+  "version": "0.1.0",
+  "url": "logger.snask",
+  "description": "Logging estruturado simples (níveis, timestamp, arquivo opcional)."
+}

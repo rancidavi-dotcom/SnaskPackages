@@ -1,0 +1,90 @@
+// logger.snask — Logging simples
+// Depende de: colors (para output colorido opcional) e sfs (para arquivo opcional)
+
+import "colors"
+import "sfs"
+
+let _logger_level = 2; // 0=debug 1=info 2=warn 3=error
+let _logger_use_color = true;
+let _logger_file = nil;
+let _logger_time = true;
+
+fun version()
+    return "0.1.0";
+
+fun set_level(level)
+    _logger_level = level;
+    return true;
+
+fun get_level()
+    return _logger_level;
+
+fun set_color(enabled)
+    _logger_use_color = enabled;
+    return true;
+
+fun set_time(enabled)
+    _logger_time = enabled;
+    return true;
+
+fun set_file(path)
+    _logger_file = path;
+    return true;
+
+fun clear_file()
+    _logger_file = nil;
+    return true;
+
+fun _level_name(level)
+    if level == 0
+        return "DEBUG";
+    if level == 1
+        return "INFO";
+    if level == 2
+        return "WARN";
+    return "ERROR";
+
+fun _level_style(level)
+    if level == 0
+        return colors::gray();
+    if level == 1
+        return colors::cyan();
+    if level == 2
+        return colors::yellow();
+    return colors::red();
+
+fun _ts()
+    // epoch seconds (string)
+    return num_to_str(s_time());
+
+fun _emit(line)
+    print(line);
+    if !is_nil(_logger_file)
+        // newline manual
+        sfs::append(_logger_file, line + "\n");
+
+fun log(level, msg)
+    if level < _logger_level
+        return false;
+
+    let prefix = "[" + _level_name(level) + "]";
+    if _logger_time
+        prefix = "[" + _ts() + "]" + prefix;
+
+    let line = prefix + " " + msg;
+    if _logger_use_color
+        line = colors::wrap(_level_style(level), line);
+    _emit(line);
+    return true;
+
+fun debug(msg)
+    return log(0, msg);
+
+fun info(msg)
+    return log(1, msg);
+
+fun warn(msg)
+    return log(2, msg);
+
+fun error(msg)
+    return log(3, msg);

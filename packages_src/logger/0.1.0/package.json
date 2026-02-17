@@ -1,0 +1,5 @@
+{
+  "name": "logger",
+  "version": "0.1.0",
+  "description": "Logging estruturado simples (níveis, timestamp, arquivo opcional)."
+}
