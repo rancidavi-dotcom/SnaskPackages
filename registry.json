@@ -15,6 +15,11 @@
       "url": "colors.snask",
       "version": "0.1.0"
     },
+    "datetime": {
+      "description": "Biblioteca de data/hora (Unix, ISO8601 simples, durações).",
+      "url": "datetime.snask",
+      "version": "0.1.0"
+    },
     "gui": {
       "description": "GUI (GTK3) estilo Tkinter (Linux).",
       "url": "gui.snask",
