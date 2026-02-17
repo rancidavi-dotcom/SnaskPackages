@@ -1,64 +1,69 @@
 {
   "packages": {
-    "utils": {
-      "version": "1.2.0",
-      "url": "utils.snask",
-      "description": "Biblioteca padrão de utilitários (Constantes e Funções) para Snask."
-    },
-    "sfs": {
-      "version": "1.2.1",
-      "url": "sfs.snask",
-      "description": "Snask File System - Biblioteca nativa para manipulação de arquivos e diretórios via LLVM."
-    },
-    "requests": {
-      "version": "1.0.0",
-      "url": "requests.snask",
-      "description": "Biblioteca HTTP completa para Snask (GET, POST, PUT, DELETE, PATCH)."
-    },
-    "json": {
-      "version": "1.0.0",
-      "url": "json.snask",
-      "description": "Biblioteca JSON - parse, stringify, pretty, get/set e helpers de leitura/escrita de arquivos."
-    },
-    "os": {
-      "version": "1.0.0",
-      "url": "os.snask",
-      "description": "Biblioteca OS - helpers de sistema, env, tempo e wrappers de arquivo."
-    },
     "blaze": {
-      "version": "0.2.0",
+      "description": "Blaze - micro web framework estilo Flask (router simples + servidor HTTP).",
       "url": "blaze.snask",
-      "description": "Blaze - micro web framework estilo Flask (router simples + servidor HTTP)."
+      "version": "0.2.0"
     },
     "blaze_auth": {
-      "version": "0.2.0",
+      "description": "Blaze Auth - autenticação local + sessões/cookies; stubs para Google OAuth.",
       "url": "blaze_auth.snask",
-      "description": "Blaze Auth - autenticação local + sessões/cookies; stubs para Google OAuth."
+      "version": "0.2.0"
     },
-    "sjson": {
-      "version": "0.1.0",
-      "description": "Sjson: JSON-like mais seguro (helpers nativos).",
-      "url": "sjson.snask"
-    },
-    "prelude": {
-      "version": "0.1.0",
-      "description": "Prelude: helpers comuns (println/assert/Result-like).",
-      "url": "prelude.snask"
+    "colors": {
+      "description": "Cores e estilos ANSI no terminal (colorize, reset, bold, etc.).",
+      "url": "colors.snask",
+      "version": "0.1.0"
     },
     "gui": {
-      "version": "0.2.0",
+      "description": "GUI (GTK3) estilo Tkinter (Linux).",
       "url": "gui.snask",
-      "description": "GUI (GTK3) estilo Tkinter (Linux)."
+      "version": "0.2.0"
     },
-    "sqlite": {
-      "version": "0.1.0",
-      "url": "sqlite.snask",
-      "description": "SQLite nativo: open/exec/query + Statement API (prepare/bind/step/column)."
+    "json": {
+      "description": "Biblioteca JSON - parse, stringify, pretty, get/set e helpers de leitura/escrita de arquivos.",
+      "url": "json.snask",
+      "version": "1.0.0"
     },
     "log": {
-      "version": "0.3.4",
+      "description": "Logging simples: níveis, timestamp opcional e output em arquivo.",
       "url": "log.snask",
-      "description": "Logging simples: níveis, timestamp opcional e output em arquivo."
+      "version": "0.3.4"
+    },
+    "os": {
+      "description": "Biblioteca OS - helpers de sistema, env, tempo e wrappers de arquivo.",
+      "url": "os.snask",
+      "version": "1.0.0"
+    },
+    "prelude": {
+      "description": "Prelude: helpers comuns (println/assert/Result-like).",
+      "url": "prelude.snask",
+      "version": "0.1.0"
+    },
+    "requests": {
+      "description": "Biblioteca HTTP completa para Snask (GET, POST, PUT, DELETE, PATCH).",
+      "url": "requests.snask",
+      "version": "1.0.0"
+    },
+    "sfs": {
+      "description": "Snask File System - Biblioteca nativa para manipulação de arquivos e diretórios via LLVM.",
+      "url": "sfs.snask",
+      "version": "1.2.1"
+    },
+    "sjson": {
+      "description": "Sjson: JSON-like mais seguro (helpers nativos).",
+      "url": "sjson.snask",
+      "version": "0.1.0"
+    },
+    "sqlite": {
+      "description": "SQLite nativo: open/exec/query + Statement API (prepare/bind/step/column).",
+      "url": "sqlite.snask",
+      "version": "0.1.0"
+    },
+    "utils": {
+      "description": "Biblioteca padrão de utilitários (Constantes e Funções) para Snask.",
+      "url": "utils.snask",
+      "version": "1.2.0"
     }
   }
 }
