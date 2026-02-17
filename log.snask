@@ -6,17 +6,22 @@ import "json";
 // Níveis: 0=debug, 1=info, 2=warn, 3=error, 4=off
 
 mut _log_level = 1;
-mut _log_file = nil; // se string, também escreve no arquivo (append)
+// se string, também escreve no arquivo (append)
+mut _log_file = nil;
 mut _log_with_time = true;
 mut _log_prefix = "";
 mut _log_sep = " ";
 mut _log_console = true;
 mut _log_buffer_enabled = false;
-mut _log_buffer = nil; // json object: {"0":"...", "1":"..."}
+// json object: {"0":"...", "1":"..."}
+mut _log_buffer = nil;
 mut _log_buffer_len = 0;
-mut _log_fields = nil; // json object: {"request_id":"...", ...}
-mut _log_rotate_max_bytes = 0; // 0 desliga
-mut _log_rotate_keep = 0; // 0 desliga
+// json object: {"request_id":"...", ...}
+mut _log_fields = nil;
+// 0 desliga
+mut _log_rotate_max_bytes = 0;
+// 0 desliga
+mut _log_rotate_keep = 0;
 
 fun level_debug()
     return 0;

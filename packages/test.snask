@@ -19,7 +19,8 @@ mut _tests_section = "";
 mut _tests_started_at = 0;
 mut _tests_snap_dir = "__snapshots__";
 mut _tests_update_snapshots = false;
-mut _tests_failed_names = nil; // json object { "0": "name", ... }
+// json object { "0": "name", ... }
+mut _tests_failed_names = nil;
 mut _tests_failed_len = 0;
 
 fun begin()
