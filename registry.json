@@ -44,6 +44,11 @@
       "version": "0.1.0",
       "description": "Prelude: helpers comuns (println/assert/Result-like).",
       "url": "prelude.snask"
+    },
+    "gui": {
+      "version": "0.1.0",
+      "url": "gui.snask",
+      "description": "GUI (GTK3) estilo Tkinter (Linux)."
     }
   }
 }

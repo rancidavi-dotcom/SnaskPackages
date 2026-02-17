@@ -1,0 +1,52 @@
+// GUI (Linux/GTK) - estilo Tkinter (MVP)
+//
+// Dependências do sistema (Ubuntu/Pop!_OS):
+//   sudo apt install -y libgtk-3-dev pkg-config
+//
+// Depois recompile o runtime:
+//   snask setup
+
+fun init()
+    return gui_init();
+
+fun window(title, w, h)
+    return gui_window(title, w, h);
+
+fun vbox()
+    return gui_vbox();
+
+fun set_child(parent, child)
+    return gui_set_child(parent, child);
+
+fun add(parent, child)
+    return gui_add(parent, child);
+
+fun label(text)
+    return gui_label(text);
+
+fun entry()
+    return gui_entry();
+
+fun button(text)
+    return gui_button(text);
+
+fun show_all(widget)
+    return gui_show_all(widget);
+
+fun set_text(widget, text)
+    return gui_set_text(widget, text);
+
+fun get_text(widget)
+    return gui_get_text(widget);
+
+// handler: nome da função (string) que será chamada.
+// assinatura:
+//   fun on_click(widget_handle)
+fun on_click(widget, handler)
+    return gui_on_click(widget, handler);
+
+fun run()
+    return gui_run();
+
+fun quit()
+    return gui_quit();
