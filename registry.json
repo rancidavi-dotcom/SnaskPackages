@@ -35,6 +35,11 @@
       "url": "log.snask",
       "version": "0.3.4"
     },
+    "logger": {
+      "description": "Logging estruturado simples (níveis, timestamp, arquivo opcional).",
+      "url": "logger.snask",
+      "version": "0.1.0"
+    },
     "os": {
       "description": "Biblioteca OS - helpers de sistema, env, tempo e wrappers de arquivo.",
       "url": "os.snask",
