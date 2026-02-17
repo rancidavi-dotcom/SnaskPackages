@@ -23,7 +23,7 @@
     "gui": {
       "description": "GUI (GTK3) estilo Tkinter (Linux).",
       "url": "gui.snask",
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     "gui_app": {
       "description": "App helpers em cima do gui (window, state simples, callbacks).}",
