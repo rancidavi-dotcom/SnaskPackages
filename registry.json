@@ -13,7 +13,7 @@
     "colors": {
       "description": "Cores e estilos ANSI no terminal (colorize, reset, bold, etc.).",
       "url": "colors.snask",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "datetime": {
       "description": "Biblioteca de data/hora (Unix, ISO8601 simples, durações).",

@@ -1,0 +1,55 @@
+// colors.snask — ANSI colors/styles
+
+fun version()
+    return "0.1.0";
+
+fun esc(code)
+    return "\u001b[" + code + "m";
+
+fun reset()
+    return esc("0");
+
+fun bold()
+    return esc("1");
+
+fun dim()
+    return esc("2");
+
+fun underline()
+    return esc("4");
+
+fun red()
+    return esc("31");
+
+fun green()
+    return esc("32");
+
+fun yellow()
+    return esc("33");
+
+fun blue()
+    return esc("34");
+
+fun magenta()
+    return esc("35");
+
+fun cyan()
+    return esc("36");
+
+fun gray()
+    return esc("90");
+
+fun wrap(style, text)
+    return style + text + reset();
+
+fun ok(text)
+    return wrap(green(), text);
+
+fun warn(text)
+    return wrap(yellow(), text);
+
+fun err(text)
+    return wrap(red(), text);
+
+fun info(text)
+    return wrap(cyan(), text);
