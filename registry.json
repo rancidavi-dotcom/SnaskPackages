@@ -3,12 +3,17 @@
         "utils": {
             "version": "1.2.0",
             "url": "utils.snask",
-            "description": "Biblioteca padrão de utilitários (Constantes e Funções) para Snask."
+            "description": "Biblioteca padr\u00e3o de utilit\u00e1rios (Constantes e Fun\u00e7\u00f5es) para Snask."
         },
         "sfs": {
             "version": "1.2.0",
             "url": "sfs.snask",
-            "description": "Snask File System - Biblioteca nativa para manipulação de arquivos e diretórios via LLVM."
+            "description": "Snask File System - Biblioteca nativa para manipula\u00e7\u00e3o de arquivos e diret\u00f3rios via LLVM."
+        },
+        "requests": {
+            "version": "1.0.0",
+            "url": "requests.snask",
+            "description": "Biblioteca HTTP completa para Snask (GET, POST, PUT, DELETE, PATCH)."
         }
     }
 }

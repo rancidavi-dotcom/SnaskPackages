@@ -1,0 +1,6 @@
+// requests.snask - Biblioteca HTTP para Snask v0.2.1
+fun get(url) { return s_http_get(url); }
+fun post(url, data) { return s_http_post(url, data); }
+fun put(url, data) { return s_http_put(url, data); }
+fun delete(url) { return s_http_delete(url); }
+fun patch(url, data) { return s_http_patch(url, data); }
