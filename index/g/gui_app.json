@@ -1,0 +1,5 @@
+{
+  "version": "0.1.0",
+  "url": "gui_app.snask",
+  "description": "App helpers em cima do gui (window, state simples, callbacks).}"
+}

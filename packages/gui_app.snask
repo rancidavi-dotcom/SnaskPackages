@@ -1,0 +1,47 @@
+import "gui";
+
+fun version()
+    return "0.1.0";
+
+// Inicializa o GTK; retorna bool
+fun init()
+    return gui::init();
+
+// Cria janela padrão e devolve (win_handle, root_vbox)
+fun window(title, w, h, resizable)
+    let win = gui::window(title, w, h);
+    gui::set_resizable(win, resizable);
+    let root = gui::vbox();
+    gui::set_child(win, root);
+    return win;
+
+fun run()
+    gui::run();
+
+fun quit()
+    gui::quit();
+
+fun show(win)
+    gui::show_all(win);
+
+// Helpers de estado simples (sem dict real): guarda pares key=value em uma string.
+mut _kv = "";
+
+fun state_set(key, value)
+    // formato: |k=v|
+    _kv = _kv + "|" + key + "=" + value;
+    return true;
+
+fun state_get(key)
+    let needle = "|" + key + "=";
+    let i = 0;
+    // busca linear simples
+    while i < s_len(_kv)
+        if substring(_kv, i, s_len(needle)) == needle
+            // pega até próximo '|'
+            let j = i + s_len(needle);
+            while j < s_len(_kv) and substring(_kv, j, 1) != "|"
+                j = j + 1;
+            return substring(_kv, i + s_len(needle), j - (i + s_len(needle)));
+        i = i + 1;
+    return nil;

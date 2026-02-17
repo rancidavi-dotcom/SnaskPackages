@@ -1,0 +1,5 @@
+{
+  "name": "gui_app",
+  "version": "0.1.0",
+  "description": "App helpers em cima do gui (window, state simples, callbacks).}"
+}
