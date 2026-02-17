@@ -18,7 +18,7 @@
     "datetime": {
       "description": "Biblioteca de data/hora (Unix, ISO8601 simples, durações).",
       "url": "datetime.snask",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "gui": {
       "description": "GUI (GTK3) estilo Tkinter (Linux).",
