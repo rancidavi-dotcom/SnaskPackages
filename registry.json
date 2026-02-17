@@ -25,6 +25,11 @@
       "url": "gui.snask",
       "version": "0.2.0"
     },
+    "gui_layout": {
+      "description": "Helpers de layout em cima do gui (containers, build helpers).",
+      "url": "gui_layout.snask",
+      "version": "0.1.0"
+    },
     "json": {
       "description": "Biblioteca JSON - parse, stringify, pretty, get/set e helpers de leitura/escrita de arquivos.",
       "url": "json.snask",

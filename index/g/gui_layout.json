@@ -1,0 +1,5 @@
+{
+  "version": "0.1.0",
+  "url": "gui_layout.snask",
+  "description": "Helpers de layout em cima do gui (containers, build helpers)."
+}

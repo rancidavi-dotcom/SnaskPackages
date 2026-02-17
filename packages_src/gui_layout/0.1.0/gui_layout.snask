@@ -1,0 +1,37 @@
+import "gui";
+
+fun version()
+    return "0.1.0";
+
+// helpers de layout
+fun vbox_with(parent)
+    let box = gui::vbox();
+    gui::add(parent, box);
+    return box;
+
+fun hbox_with(parent)
+    let box = gui::hbox();
+    gui::add(parent, box);
+    return box;
+
+fun row_buttons(parent, b1, b2, b3)
+    let row = gui::hbox();
+    gui::add(parent, row);
+    if not is_nil(b1)
+        gui::add_expand(row, b1);
+    if not is_nil(b2)
+        gui::add_expand(row, b2);
+    if not is_nil(b3)
+        gui::add_expand(row, b3);
+    return row;
+
+fun section(parent, title)
+    let lbl = gui::label(title);
+    gui::add(parent, lbl);
+    gui::add(parent, gui::separator_h());
+    return lbl;
+
+fun spacer_h(parent)
+    let sep = gui::separator_h();
+    gui::add(parent, sep);
+    return sep;

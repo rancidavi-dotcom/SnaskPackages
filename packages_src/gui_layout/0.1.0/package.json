@@ -1,0 +1,5 @@
+{
+  "name": "gui_layout",
+  "version": "0.1.0",
+  "description": "Helpers de layout em cima do gui (containers, build helpers)."
+}
