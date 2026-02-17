@@ -1,0 +1,5 @@
+{
+  "version": "0.1.0",
+  "url": "prelude.snask",
+  "description": "Prelude: helpers comuns (println/assert/Result-like)."
+}

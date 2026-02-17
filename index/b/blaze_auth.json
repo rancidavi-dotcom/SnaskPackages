@@ -1,0 +1,5 @@
+{
+  "version": "0.2.0",
+  "url": "blaze_auth.snask",
+  "description": "Blaze Auth - autenticação local + sessões/cookies; stubs para Google OAuth."
+}

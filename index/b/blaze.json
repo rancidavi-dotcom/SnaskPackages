@@ -1,0 +1,5 @@
+{
+  "version": "0.2.0",
+  "url": "blaze.snask",
+  "description": "Blaze - micro web framework estilo Flask (router simples + servidor HTTP)."
+}

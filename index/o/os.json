@@ -1,0 +1,5 @@
+{
+  "version": "1.0.0",
+  "url": "os.snask",
+  "description": "Biblioteca OS - helpers de sistema, env, tempo e wrappers de arquivo."
+}

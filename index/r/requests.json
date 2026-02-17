@@ -1,0 +1,5 @@
+{
+  "version": "1.0.0",
+  "url": "requests.snask",
+  "description": "Biblioteca HTTP completa para Snask (GET, POST, PUT, DELETE, PATCH)."
+}
