@@ -1,0 +1,47 @@
+// SQLite (SnaskPackages)
+// Requer (Linux): sudo apt install -y libsqlite3-dev pkg-config
+// Depois: snask setup
+
+fun open(path)
+    return sqlite_open(path);
+
+fun close(db)
+    return sqlite_close(db);
+
+fun exec(db, sql)
+    return sqlite_exec(db, sql);
+
+fun query(db, sql)
+    return sqlite_query(db, sql);
+
+// ----- Stmt API (queries parametrizadas) -----
+fun prepare(db, sql)
+    return sqlite_prepare(db, sql);
+
+fun finalize(stmt)
+    return sqlite_finalize(stmt);
+
+fun reset(stmt)
+    return sqlite_reset(stmt);
+
+fun bind_text(stmt, idx, text)
+    return sqlite_bind_text(stmt, idx, text);
+
+fun bind_num(stmt, idx, num)
+    return sqlite_bind_num(stmt, idx, num);
+
+fun bind_null(stmt, idx)
+    return sqlite_bind_null(stmt, idx);
+
+fun step(stmt)
+    return sqlite_step(stmt);
+
+fun column(stmt, idx0)
+    return sqlite_column(stmt, idx0);
+
+fun column_count(stmt)
+    return sqlite_column_count(stmt);
+
+fun column_name(stmt, idx0)
+    return sqlite_column_name(stmt, idx0);
+

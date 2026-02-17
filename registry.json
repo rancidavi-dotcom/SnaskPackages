@@ -49,6 +49,11 @@
       "version": "0.2.0",
       "url": "gui.snask",
       "description": "GUI (GTK3) estilo Tkinter (Linux)."
+    },
+    "sqlite": {
+      "version": "0.1.0",
+      "url": "sqlite.snask",
+      "description": "SQLite nativo: open/exec/query + Statement API (prepare/bind/step/column)."
     }
   }
 }
