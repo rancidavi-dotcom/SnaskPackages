@@ -263,7 +263,7 @@ fun duration_s()
     return now - _tests_started_at;
 
 fun report()
-    return "tests: " + summary() + " duration_s=" + num_to_str(duration_s());
+    return "tests: " + test::summary() + " duration_s=" + num_to_str(test::duration_s());
 
 fun ok()
     return _tests_fail == 0;
@@ -272,7 +272,7 @@ fun has_failures()
     return _tests_fail > 0;
 
 fun end()
-    log::info(report());
+    log::info(test::report());
     if _tests_fail > 0
         exit(1);
     return true;
@@ -283,7 +283,7 @@ fun _snap_file(name)
 
 fun snapshot(name, value_str)
     sfs_mkdir(_tests_snap_dir);
-    let p = _snap_file(name);
+    let p = test::_snap_file(name);
     if _tests_update_snapshots or not sfs_exists(p)
         sfs_write(p, value_str);
         return test::_ok("snapshot: " + name);

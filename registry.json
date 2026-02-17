@@ -61,7 +61,7 @@
       "description": "Logging simples: níveis, timestamp opcional e output em arquivo."
     },
     "test": {
-      "version": "0.3.2",
+      "version": "0.3.3",
       "url": "test.snask",
       "description": "Mini framework de testes: begin/check/assert/summary/end."
     }
