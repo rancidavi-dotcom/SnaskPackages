@@ -1,0 +1,5 @@
+{
+  "version": "0.1.0",
+  "url": "colors.snask",
+  "description": "Cores e estilos ANSI no terminal (colorize, reset, bold, etc.)."
+}
