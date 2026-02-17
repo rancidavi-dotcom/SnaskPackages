@@ -1,0 +1,36 @@
+import "gui";
+
+fun version()
+    return "0.1.0";
+
+fun labeled_entry(parent, label_text, placeholder)
+    let row = gui::hbox();
+    gui::add(parent, row);
+    let lbl = gui::label(label_text);
+    gui::add(row, lbl);
+    let e = gui::entry();
+    if not is_nil(placeholder)
+        gui::set_placeholder(e, placeholder);
+    gui::add_expand(row, e);
+    return e;
+
+fun button_row(parent, text1, handler1, text2, handler2)
+    let row = gui::hbox();
+    gui::add(parent, row);
+
+    let b1 = gui::button(text1);
+    gui::on_click(b1, handler1);
+    gui::add_expand(row, b1);
+
+    if not is_nil(text2)
+        let b2 = gui::button(text2);
+        gui::on_click(b2, handler2);
+        gui::add_expand(row, b2);
+
+    return row;
+
+fun msg_ok(title, msg)
+    gui::msg_info(title, msg);
+
+fun msg_err(title, msg)
+    gui::msg_error(title, msg);
