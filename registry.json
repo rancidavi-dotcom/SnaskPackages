@@ -56,12 +56,12 @@
       "description": "SQLite nativo: open/exec/query + Statement API (prepare/bind/step/column)."
     },
     "log": {
-      "version": "0.2.0",
+      "version": "0.3.0",
       "url": "log.snask",
       "description": "Logging simples: níveis, timestamp opcional e output em arquivo."
     },
     "test": {
-      "version": "0.2.0",
+      "version": "0.3.0",
       "url": "test.snask",
       "description": "Mini framework de testes: begin/check/assert/summary/end."
     }

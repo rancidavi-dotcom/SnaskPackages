@@ -1,4 +1,6 @@
 import "log";
+import "os";
+import "json";
 
 // test.snask — mini framework de testes (Snask puro)
 // Uso recomendado:
@@ -14,6 +16,11 @@ mut _tests_skip = 0;
 mut _tests_todo = 0;
 mut _tests_exit_on_fail = false;
 mut _tests_section = "";
+mut _tests_started_at = 0;
+mut _tests_snap_dir = "__snapshots__";
+mut _tests_update_snapshots = false;
+mut _tests_failed_names = nil; // json object { "0": "name", ... }
+mut _tests_failed_len = 0;
 
 fun begin()
     _tests_total = 0;
@@ -22,6 +29,9 @@ fun begin()
     _tests_skip = 0;
     _tests_todo = 0;
     _tests_section = "";
+    _tests_started_at = os::now();
+    _tests_failed_names = nil;
+    _tests_failed_len = 0;
     log::info("tests: begin");
     return true;
 
@@ -56,12 +66,37 @@ fun clear_section()
     _tests_section = "";
     return true;
 
+fun set_snapshots_dir(dir)
+    _tests_snap_dir = dir;
+    return true;
+
+fun snapshots_dir()
+    return _tests_snap_dir;
+
+fun enable_update_snapshots(on)
+    _tests_update_snapshots = on;
+    return true;
+
+fun is_update_snapshots_enabled()
+    return _tests_update_snapshots;
+
 fun _name(name)
     if is_nil(_tests_section)
         return name;
     if _tests_section == ""
         return name;
     return _tests_section + " :: " + name;
+
+fun _fail_push(name)
+    if is_nil(_tests_failed_names)
+        _tests_failed_names = json::new_object();
+        _tests_failed_len = 0;
+    json::set(_tests_failed_names, num_to_str(_tests_failed_len), _name(name));
+    _tests_failed_len = _tests_failed_len + 1;
+    return true;
+
+fun failed_names()
+    return _tests_failed_names;
 
 fun _ok(name)
     _tests_total = _tests_total + 1;
@@ -73,6 +108,7 @@ fun _fail(name, msg)
     _tests_total = _tests_total + 1;
     _tests_fail = _tests_fail + 1;
     log::error("FAIL " + _name(name) + " :: " + msg);
+    _fail_push(name);
     if _tests_exit_on_fail
         exit(1);
     return false;
@@ -221,6 +257,13 @@ fun check_obj(name, v)
 fun summary()
     return "total=" + num_to_str(_tests_total) + " ok=" + num_to_str(_tests_ok) + " fail=" + num_to_str(_tests_fail) + " skip=" + num_to_str(_tests_skip) + " todo=" + num_to_str(_tests_todo);
 
+fun duration_s()
+    let now = os::now();
+    return now - _tests_started_at;
+
+fun report()
+    return "tests: " + summary() + " duration_s=" + num_to_str(duration_s());
+
 fun ok()
     return _tests_fail == 0;
 
@@ -228,7 +271,29 @@ fun has_failures()
     return _tests_fail > 0;
 
 fun end()
-    log::info("tests: " + summary());
+    log::info(report());
     if _tests_fail > 0
         exit(1);
     return true;
+
+// ---------------- Snapshots ----------------
+fun _snap_file(name)
+    return _tests_snap_dir + "/" + name + ".snap";
+
+fun snapshot(name, value_str)
+    sfs_mkdir(_tests_snap_dir);
+    let p = _snap_file(name);
+    if _tests_update_snapshots or not sfs_exists(p)
+        sfs_write(p, value_str);
+        return _ok("snapshot: " + name);
+    let cur = sfs_read(p);
+    if cur == value_str
+        return _ok("snapshot: " + name);
+    return _fail("snapshot: " + name, "snapshot mismatch");
+
+fun snapshot_update(name, value_str)
+    let prev = _tests_update_snapshots;
+    _tests_update_snapshots = true;
+    let r = snapshot(name, value_str);
+    _tests_update_snapshots = prev;
+    return r;
