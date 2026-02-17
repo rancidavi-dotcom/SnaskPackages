@@ -50,3 +50,9 @@ fun run()
 
 fun quit()
     return gui_quit();
+
+fun hbox()
+    return gui_hbox();
+
+fun on_click_ctx(widget, handler, ctx)
+    return gui_on_click_ctx(widget, handler, ctx);
