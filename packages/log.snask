@@ -39,105 +39,105 @@ fun level_off()
     return 4;
 
 fun set_level(level)
-    log::_log_level = level;
+    _log_level = level;
     return true;
 
 fun get_level()
-    return log::_log_level;
+    return _log_level;
 
 fun set_prefix(prefix)
-    log::_log_prefix = prefix;
+    _log_prefix = prefix;
     return true;
 
 fun get_prefix()
-    return log::_log_prefix;
+    return _log_prefix;
 
 fun set_separator(sep)
-    log::_log_sep = sep;
+    _log_sep = sep;
     return true;
 
 fun get_separator()
-    return log::_log_sep;
+    return _log_sep;
 
 fun set_file(path)
-    log::_log_file = path;
+    _log_file = path;
     return true;
 
 fun clear_file()
-    log::_log_file = nil;
+    _log_file = nil;
     return true;
 
 fun set_rotate(max_bytes, keep_files)
     // Ex: set_rotate(1000000, 3) -> app.log, app.log.1, app.log.2, app.log.3
-    log::_log_rotate_max_bytes = max_bytes;
-    log::_log_rotate_keep = keep_files;
+    _log_rotate_max_bytes = max_bytes;
+    _log_rotate_keep = keep_files;
     return true;
 
 fun clear_rotate()
-    log::_log_rotate_max_bytes = 0;
-    log::_log_rotate_keep = 0;
+    _log_rotate_max_bytes = 0;
+    _log_rotate_keep = 0;
     return true;
 
 fun enable_console(on)
-    log::_log_console = on;
+    _log_console = on;
     return true;
 
 fun is_console_enabled()
-    return log::_log_console;
+    return _log_console;
 
 fun enable_time(on)
-    log::_log_with_time = on;
+    _log_with_time = on;
     return true;
 
 fun is_time_enabled()
-    return log::_log_with_time;
+    return _log_with_time;
 
 fun enable_buffer(on)
-    log::_log_buffer_enabled = on;
-    if on and is_nil(log::_log_buffer)
-        log::_log_buffer = json::new_object();
-        log::_log_buffer_len = 0;
+    _log_buffer_enabled = on;
+    if on and is_nil(_log_buffer)
+        _log_buffer = json::new_object();
+        _log_buffer_len = 0;
     return true;
 
 fun is_buffer_enabled()
-    return log::_log_buffer_enabled;
+    return _log_buffer_enabled;
 
 fun clear_buffer()
-    log::_log_buffer = json::new_object();
-    log::_log_buffer_len = 0;
+    _log_buffer = json::new_object();
+    _log_buffer_len = 0;
     return true;
 
 fun buffer_len()
-    return log::_log_buffer_len;
+    return _log_buffer_len;
 
 fun buffer_get(idx)
-    if is_nil(log::_log_buffer)
+    if is_nil(_log_buffer)
         return nil;
-    return json::get(log::_log_buffer, num_to_str(idx));
+    return json::get(_log_buffer, num_to_str(idx));
 
 fun buffer_all()
-    return log::_log_buffer;
+    return _log_buffer;
 
 fun set_field(key, value)
-    if is_nil(log::_log_fields)
-        log::_log_fields = json::new_object();
-    json::set(log::_log_fields, key, value);
+    if is_nil(_log_fields)
+        _log_fields = json::new_object();
+    json::set(_log_fields, key, value);
     return true;
 
 fun clear_field(key)
-    if is_nil(log::_log_fields)
+    if is_nil(_log_fields)
         return true;
-    json::set(log::_log_fields, key, nil);
+    json::set(_log_fields, key, nil);
     return true;
 
 fun clear_fields()
-    log::_log_fields = json::new_object();
+    _log_fields = json::new_object();
     return true;
 
 fun fields()
-    if is_nil(log::_log_fields)
-        log::_log_fields = json::new_object();
-    return log::_log_fields;
+    if is_nil(_log_fields)
+        _log_fields = json::new_object();
+    return _log_fields;
 
 fun level_name(level)
     if level == 0
@@ -151,24 +151,24 @@ fun level_name(level)
     return "OFF";
 
 fun _ts()
-    if not log::_log_with_time
+    if not _log_with_time
         return "";
     // epoch seconds
     let t = os::now();
     return "[" + num_to_str(t) + "]";
 
 fun _prefix()
-    if is_nil(log::_log_prefix)
+    if is_nil(_log_prefix)
         return "";
-    if log::_log_prefix == ""
+    if _log_prefix == ""
         return "";
-    return log::_log_prefix;
+    return _log_prefix;
 
 fun _fields_str()
-    if is_nil(log::_log_fields)
+    if is_nil(_log_fields)
         return "";
     // stringify é suficiente; para logs humanos, vai como objeto em JSON.
-    let s = json::stringify(log::_log_fields);
+    let s = json::stringify(_log_fields);
     if s == "{}"
         return "";
     return s;
@@ -178,55 +178,55 @@ fun _line(level, message)
     let p = log::_prefix();
     let f = log::_fields_str();
     if p == "" and f == ""
-        return log::_ts() + log::_log_sep + tag + log::_log_sep + message;
+        return log::_ts() + _log_sep + tag + _log_sep + message;
     if p != "" and f == ""
-        return log::_ts() + log::_log_sep + tag + log::_log_sep + p + log::_log_sep + message;
+        return log::_ts() + _log_sep + tag + _log_sep + p + _log_sep + message;
     if p == "" and f != ""
-        return log::_ts() + log::_log_sep + tag + log::_log_sep + f + log::_log_sep + message;
-    return log::_ts() + log::_log_sep + tag + log::_log_sep + p + log::_log_sep + f + log::_log_sep + message;
+        return log::_ts() + _log_sep + tag + _log_sep + f + _log_sep + message;
+    return log::_ts() + _log_sep + tag + _log_sep + p + _log_sep + f + _log_sep + message;
 
 fun _rotate_if_needed()
-    if is_nil(log::_log_file)
+    if is_nil(_log_file)
         return false;
-    if log::_log_rotate_max_bytes <= 0 or log::_log_rotate_keep <= 0
+    if _log_rotate_max_bytes <= 0 or _log_rotate_keep <= 0
         return false;
-    if not sfs::exists(log::_log_file)
+    if not sfs::exists(_log_file)
         return false;
-    let sz = sfs_size(log::_log_file);
-    if sz < log::_log_rotate_max_bytes
+    let sz = sfs_size(_log_file);
+    if sz < _log_rotate_max_bytes
         return false;
 
     // rotate: .(keep..1)
-    mut i = log::_log_rotate_keep;
+    mut i = _log_rotate_keep;
     while i >= 1
-        mut src = log::_log_file;
+        mut src = _log_file;
         if i > 1
-            src = log::_log_file + "." + num_to_str(i - 1);
-        let dst = log::_log_file + "." + num_to_str(i);
+            src = _log_file + "." + num_to_str(i - 1);
+        let dst = _log_file + "." + num_to_str(i);
         if sfs::exists(src)
             sfs_move(src, dst);
         i = i - 1;
     // truncate original
-    sfs::write(log::_log_file, "");
+    sfs::write(_log_file, "");
     return true;
 
 fun _emit(line)
-    if log::_log_console
+    if _log_console
         print(line);
-    if not is_nil(log::_log_file)
+    if not is_nil(_log_file)
         log::_rotate_if_needed();
-        sfs::append(log::_log_file, line + "\n");
-    if log::_log_buffer_enabled
-        if is_nil(log::_log_buffer)
-            log::_log_buffer = json::new_object();
-        json::set(log::_log_buffer, num_to_str(log::_log_buffer_len), line);
-        log::_log_buffer_len = log::_log_buffer_len + 1;
+        sfs::append(_log_file, line + "\n");
+    if _log_buffer_enabled
+        if is_nil(_log_buffer)
+            _log_buffer = json::new_object();
+        json::set(_log_buffer, num_to_str(_log_buffer_len), line);
+        _log_buffer_len = _log_buffer_len + 1;
     return true;
 
 fun log(level, message)
-    if log::_log_level == 4
+    if _log_level == 4
         return false;
-    if level < log::_log_level
+    if level < _log_level
         return false;
     return log::_emit(log::_line(level, message));
 
@@ -248,28 +248,28 @@ fun fatal(message)
     return false;
 
 fun debug2(a, b)
-    return log::debug(a + log::_log_sep + b);
+    return log::debug(a + _log_sep + b);
 
 fun info2(a, b)
-    return log::info(a + log::_log_sep + b);
+    return log::info(a + _log_sep + b);
 
 fun warn2(a, b)
-    return log::warn(a + log::_log_sep + b);
+    return log::warn(a + _log_sep + b);
 
 fun error2(a, b)
-    return log::error(a + log::_log_sep + b);
+    return log::error(a + _log_sep + b);
 
 fun debug3(a, b, c)
-    return log::debug(a + log::_log_sep + b + log::_log_sep + c);
+    return log::debug(a + _log_sep + b + _log_sep + c);
 
 fun info3(a, b, c)
-    return log::info(a + log::_log_sep + b + log::_log_sep + c);
+    return log::info(a + _log_sep + b + _log_sep + c);
 
 fun warn3(a, b, c)
-    return log::warn(a + log::_log_sep + b + log::_log_sep + c);
+    return log::warn(a + _log_sep + b + _log_sep + c);
 
 fun error3(a, b, c)
-    return log::error(a + log::_log_sep + b + log::_log_sep + c);
+    return log::error(a + _log_sep + b + _log_sep + c);
 
 fun kv(level, key, value)
     return log::log(level, key + "=" + value);
@@ -313,31 +313,31 @@ fun kv_any(level, key, v)
 
 fun info_json(label, v)
     let s = json::stringify(v);
-    return log::info(label + log::_log_sep + s);
+    return log::info(label + _log_sep + s);
 
 fun warn_json(label, v)
     let s = json::stringify(v);
-    return log::warn(label + log::_log_sep + s);
+    return log::warn(label + _log_sep + s);
 
 fun error_json(label, v)
     let s = json::stringify(v);
-    return log::error(label + log::_log_sep + s);
+    return log::error(label + _log_sep + s);
 
 fun debug_json(label, v)
     let s = json::stringify(v);
-    return log::debug(label + log::_log_sep + s);
+    return log::debug(label + _log_sep + s);
 
 fun with_level(level, message)
     // helper: log respeitando filtro
     return log::log(level, message);
 
 fun temporarily_set_level(level)
-    let prev = log::_log_level;
-    log::_log_level = level;
+    let prev = _log_level;
+    _log_level = level;
     return prev;
 
 fun restore_level(prev)
-    log::_log_level = prev;
+    _log_level = prev;
     return true;
 
 fun trace(message)
