@@ -28,7 +28,7 @@
     "gui_app": {
       "description": "App helpers em cima do gui (window, state simples, callbacks).}",
       "url": "gui_app.snask",
-      "version": "0.1.2"
+      "version": "0.1.3"
     },
     "gui_layout": {
       "description": "Helpers de layout em cima do gui (containers, build helpers).",
