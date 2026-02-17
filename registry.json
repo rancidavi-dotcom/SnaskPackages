@@ -37,11 +37,13 @@
     },
     "sjson": {
       "version": "0.1.0",
-      "description": "Sjson: JSON-like mais seguro (helpers nativos)."
+      "description": "Sjson: JSON-like mais seguro (helpers nativos).",
+      "url": "sjson.snask"
     },
     "prelude": {
       "version": "0.1.0",
-      "description": "Prelude: helpers comuns (println/assert/Result-like)."
+      "description": "Prelude: helpers comuns (println/assert/Result-like).",
+      "url": "prelude.snask"
     }
   }
 }
