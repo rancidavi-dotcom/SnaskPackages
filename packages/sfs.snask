@@ -1,7 +1,44 @@
 // sfs.snask - Snask File System (Native LLVM)
-let SFS_VERSION = 1.2;
+let SFS_VERSION = 1.21;
 
-fun read(path) { return sfs_read(path); }
-fun write(path, content) { return sfs_write(path, content); }
-fun delete(path) { return sfs_delete(path); }
-fun exists(path) { return sfs_exists(path); }
+fun read(path)
+    return sfs_read(path);
+
+fun write(path, content)
+    return sfs_write(path, content);
+
+fun append(path, content)
+    return sfs_append(path, content);
+
+fun delete(path)
+    return sfs_delete(path);
+
+fun exists(path)
+    return sfs_exists(path);
+
+fun copy(src, dst)
+    return sfs_copy(src, dst);
+
+fun move(src, dst)
+    return sfs_move(src, dst);
+
+fun mkdir(path)
+    return sfs_mkdir(path);
+
+fun rmdir(path)
+    return sfs_rmdir(path);
+
+fun is_file(path)
+    return sfs_is_file(path);
+
+fun is_dir(path)
+    return sfs_is_dir(path);
+
+fun listdir(path)
+    return sfs_listdir(path);
+
+fun size(path)
+    return sfs_size(path);
+
+fun mtime(path)
+    return sfs_mtime(path);
