@@ -1,5 +1,5 @@
 {
+  "name": "gui_widgets",
   "version": "0.1.1",
-  "url": "gui_widgets.snask",
   "description": "Widgets prontos em cima do gui (form, buttons, etc.)."
 }

@@ -38,7 +38,7 @@
     "gui_widgets": {
       "description": "Widgets prontos em cima do gui (form, buttons, etc.).",
       "url": "gui_widgets.snask",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "json": {
       "description": "Biblioteca JSON - parse, stringify, pretty, get/set e helpers de leitura/escrita de arquivos.",
