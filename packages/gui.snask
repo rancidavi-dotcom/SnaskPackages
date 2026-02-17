@@ -2,18 +2,41 @@
 //
 // Dependências do sistema (Ubuntu/Pop!_OS):
 //   sudo apt install -y libgtk-3-dev pkg-config
-//
-// Depois recompile o runtime:
 //   snask setup
+//
+// Nota: handles são strings opacas ("0x...").
 
+// 1) App lifecycle
 fun init()
     return gui_init();
 
+fun run()
+    return gui_run();
+
+fun quit()
+    return gui_quit();
+
+// 2) Window
 fun window(title, w, h)
     return gui_window(title, w, h);
 
+// opcional: permitir redimensionar
+fun set_resizable(win, enabled)
+    return gui_set_resizable(win, enabled);
+
+// opcional: tenta ajustar tamanho ao conteúdo
+fun autosize(win)
+    return gui_autosize(win);
+
+fun set_title(win, title)
+    return gui_set_title(win, title);
+
+// 3) Layout
 fun vbox()
     return gui_vbox();
+
+fun hbox()
+    return gui_hbox();
 
 fun set_child(parent, child)
     return gui_set_child(parent, child);
@@ -21,6 +44,16 @@ fun set_child(parent, child)
 fun add(parent, child)
     return gui_add(parent, child);
 
+fun add_expand(parent, child)
+    return gui_add_expand(parent, child);
+
+fun separator_h()
+    return gui_separator_h();
+
+fun separator_v()
+    return gui_separator_v();
+
+// 4) Widgets
 fun label(text)
     return gui_label(text);
 
@@ -33,26 +66,39 @@ fun button(text)
 fun show_all(widget)
     return gui_show_all(widget);
 
+// 5) State
 fun set_text(widget, text)
     return gui_set_text(widget, text);
 
 fun get_text(widget)
     return gui_get_text(widget);
 
-// handler: nome da função (string) que será chamada.
+fun set_placeholder(entry, text)
+    return gui_set_placeholder(entry, text);
+
+fun set_editable(entry, enabled)
+    return gui_set_editable(entry, enabled);
+
+fun set_enabled(widget, enabled)
+    return gui_set_enabled(widget, enabled);
+
+fun set_visible(widget, visible)
+    return gui_set_visible(widget, visible);
+
+// 6) Events
 // assinatura:
-//   fun on_click(widget_handle)
+//   fun handler(widget_handle)
 fun on_click(widget, handler)
     return gui_on_click(widget, handler);
 
-fun run()
-    return gui_run();
+// assinatura:
+//   fun handler(widget_handle, ctx_str)
+fun on_click_ctx(widget, handler, ctx_str)
+    return gui_on_click_ctx(widget, handler, ctx_str);
 
-fun quit()
-    return gui_quit();
+// 7) Dialogs
+fun msg_info(title, msg)
+    return gui_msg_info(title, msg);
 
-fun hbox()
-    return gui_hbox();
-
-fun on_click_ctx(widget, handler, ctx)
-    return gui_on_click_ctx(widget, handler, ctx);
+fun msg_error(title, msg)
+    return gui_msg_error(title, msg);
