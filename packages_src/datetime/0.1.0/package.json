@@ -1,0 +1,5 @@
+{
+  "name": "datetime",
+  "version": "0.1.0",
+  "description": "Biblioteca de data/hora (Unix, ISO8601 simples, durações)."
+}

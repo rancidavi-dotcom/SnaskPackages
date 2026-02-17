@@ -1,0 +1,5 @@
+{
+  "version": "0.1.0",
+  "url": "datetime.snask",
+  "description": "Biblioteca de data/hora (Unix, ISO8601 simples, durações)."
+}
