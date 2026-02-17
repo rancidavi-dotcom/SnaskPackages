@@ -1,0 +1,69 @@
+// datetime.snask — Biblioteca de data/hora (Unix, ISO8601 simples, durações).
+// Nota: implementa helpers em Snask puro; usa `s_time()` para Unix epoch.
+
+fun version()
+    return "0.1.0";
+
+fun now_unix()
+    // segundos desde epoch (float)
+    return s_time();
+
+fun now_ms()
+    return s_time() * 1000;
+
+fun seconds(n)
+    return n;
+
+fun minutes(n)
+    return n * 60;
+
+fun hours(n)
+    return n * 3600;
+
+fun days(n)
+    return n * 86400;
+
+fun sleep_ms(ms)
+    s_sleep(ms);
+
+fun sleep_s(sec)
+    s_sleep(sec * 1000);
+
+fun pad2(n)
+    let s = num_to_str(n);
+    if s_len(s) == 1
+        return "0" + s;
+    return s;
+
+fun pad4(n)
+    let s = num_to_str(n);
+    if s_len(s) == 1
+        return "000" + s;
+    if s_len(s) == 2
+        return "00" + s;
+    if s_len(s) == 3
+        return "0" + s;
+    return s;
+
+// ISO8601 simples: "YYYY-MM-DDTHH:MM:SSZ"
+// Como Snask ainda não tem timezone/UTC completo no runtime, aqui é mais utilitário de string.
+fun iso8601_build(year, month, day, hour, minute, second)
+    return datetime::pad4(year) + "-" + datetime::pad2(month) + "-" + datetime::pad2(day) + "T" + datetime::pad2(hour) + ":" + datetime::pad2(minute) + ":" + datetime::pad2(second) + "Z";
+
+fun iso8601_parse_year(s)
+    return str_to_num(substring(s, 0, 4));
+
+fun iso8601_parse_month(s)
+    return str_to_num(substring(s, 5, 2));
+
+fun iso8601_parse_day(s)
+    return str_to_num(substring(s, 8, 2));
+
+fun iso8601_parse_hour(s)
+    return str_to_num(substring(s, 11, 2));
+
+fun iso8601_parse_minute(s)
+    return str_to_num(substring(s, 14, 2));
+
+fun iso8601_parse_second(s)
+    return str_to_num(substring(s, 17, 2));
