@@ -1,0 +1,83 @@
+import "log";
+
+// test.snask — mini framework de testes (Snask puro)
+// Uso recomendado:
+//   test::begin();
+//   test::check("nome", cond);
+//   test::assert_eq("x", a, b);
+//   test::end(); // exit(1) se falhar
+
+mut _tests_total = 0;
+mut _tests_ok = 0;
+mut _tests_fail = 0;
+
+fun begin()
+    _tests_total = 0;
+    _tests_ok = 0;
+    _tests_fail = 0;
+    log::info("tests: begin");
+    return true;
+
+fun total()
+    return _tests_total;
+
+fun passed()
+    return _tests_ok;
+
+fun failed()
+    return _tests_fail;
+
+fun _ok(name)
+    _tests_total = _tests_total + 1;
+    _tests_ok = _tests_ok + 1;
+    log::info("PASS " + name);
+    return true;
+
+fun _fail(name, msg)
+    _tests_total = _tests_total + 1;
+    _tests_fail = _tests_fail + 1;
+    log::error("FAIL " + name + " :: " + msg);
+    return false;
+
+fun check(name, cond)
+    if cond
+        return _ok(name);
+    return _fail(name, "cond=false");
+
+fun assert(name, cond)
+    // assert é igual check, mas encerra em caso de falha
+    if cond
+        return _ok(name);
+    _fail(name, "assertion failed");
+    exit(1);
+    return false;
+
+fun assert_eq(name, a, b)
+    if a == b
+        return _ok(name);
+    return _fail(name, "expected eq");
+
+fun assert_ne(name, a, b)
+    if a != b
+        return _ok(name);
+    return _fail(name, "expected ne");
+
+fun assert_nil(name, v)
+    if is_nil(v)
+        return _ok(name);
+    return _fail(name, "expected nil");
+
+fun assert_not_nil(name, v)
+    if not is_nil(v)
+        return _ok(name);
+    return _fail(name, "expected not nil");
+
+fun summary()
+    return "total=" + num_to_str(_tests_total) + " ok=" + num_to_str(_tests_ok) + " fail=" + num_to_str(_tests_fail);
+
+fun end()
+    log::info("tests: " + summary());
+    if _tests_fail > 0
+        exit(1);
+    return true;
+

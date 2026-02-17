@@ -1,0 +1,101 @@
+import "os";
+import "sfs";
+
+// log.snask — logging simples (Snask puro)
+// Níveis: 0=debug, 1=info, 2=warn, 3=error, 4=off
+
+mut _log_level = 1;
+mut _log_file = nil; // se string, também escreve no arquivo (append)
+mut _log_with_time = true;
+
+fun level_debug()
+    return 0;
+
+fun level_info()
+    return 1;
+
+fun level_warn()
+    return 2;
+
+fun level_error()
+    return 3;
+
+fun level_off()
+    return 4;
+
+fun set_level(level)
+    _log_level = level;
+    return true;
+
+fun get_level()
+    return _log_level;
+
+fun set_file(path)
+    _log_file = path;
+    return true;
+
+fun clear_file()
+    _log_file = nil;
+    return true;
+
+fun enable_time(on)
+    _log_with_time = on;
+    return true;
+
+fun level_name(level)
+    if level == 0
+        return "DEBUG";
+    if level == 1
+        return "INFO";
+    if level == 2
+        return "WARN";
+    if level == 3
+        return "ERROR";
+    return "OFF";
+
+fun _ts()
+    if not _log_with_time
+        return "";
+    // epoch seconds
+    let t = os::now();
+    return "[" + num_to_str(t) + "]";
+
+fun _emit(line)
+    print(line);
+    if not is_nil(_log_file)
+        sfs::append(_log_file, line + "\n");
+    return true;
+
+fun log(level, message)
+    if _log_level == 4
+        return false;
+    if level < _log_level
+        return false;
+    let tag = level_name(level);
+    let line = _ts() + " " + tag + " " + message;
+    return _emit(line);
+
+fun debug(message)
+    return log(0, message);
+
+fun info(message)
+    return log(1, message);
+
+fun warn(message)
+    return log(2, message);
+
+fun error(message)
+    return log(3, message);
+
+fun kv(level, key, value)
+    return log(level, key + "=" + value);
+
+fun kv_info(key, value)
+    return kv(1, key, value);
+
+fun kv_warn(key, value)
+    return kv(2, key, value);
+
+fun kv_error(key, value)
+    return kv(3, key, value);
+
