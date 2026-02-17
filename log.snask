@@ -1,5 +1,6 @@
 import "os";
 import "sfs";
+import "json";
 
 // log.snask — logging simples (Snask puro)
 // Níveis: 0=debug, 1=info, 2=warn, 3=error, 4=off
@@ -7,6 +8,9 @@ import "sfs";
 mut _log_level = 1;
 mut _log_file = nil; // se string, também escreve no arquivo (append)
 mut _log_with_time = true;
+mut _log_prefix = "";
+mut _log_sep = " ";
+mut _log_console = true;
 
 fun level_debug()
     return 0;
@@ -30,6 +34,20 @@ fun set_level(level)
 fun get_level()
     return _log_level;
 
+fun set_prefix(prefix)
+    _log_prefix = prefix;
+    return true;
+
+fun get_prefix()
+    return _log_prefix;
+
+fun set_separator(sep)
+    _log_sep = sep;
+    return true;
+
+fun get_separator()
+    return _log_sep;
+
 fun set_file(path)
     _log_file = path;
     return true;
@@ -38,9 +56,19 @@ fun clear_file()
     _log_file = nil;
     return true;
 
+fun enable_console(on)
+    _log_console = on;
+    return true;
+
+fun is_console_enabled()
+    return _log_console;
+
 fun enable_time(on)
     _log_with_time = on;
     return true;
+
+fun is_time_enabled()
+    return _log_with_time;
 
 fun level_name(level)
     if level == 0
@@ -60,8 +88,23 @@ fun _ts()
     let t = os::now();
     return "[" + num_to_str(t) + "]";
 
+fun _prefix()
+    if is_nil(_log_prefix)
+        return "";
+    if _log_prefix == ""
+        return "";
+    return _log_prefix;
+
+fun _line(level, message)
+    let tag = level_name(level);
+    let p = _prefix();
+    if p == ""
+        return _ts() + _log_sep + tag + _log_sep + message;
+    return _ts() + _log_sep + tag + _log_sep + p + _log_sep + message;
+
 fun _emit(line)
-    print(line);
+    if _log_console
+        print(line);
     if not is_nil(_log_file)
         sfs::append(_log_file, line + "\n");
     return true;
@@ -71,9 +114,7 @@ fun log(level, message)
         return false;
     if level < _log_level
         return false;
-    let tag = level_name(level);
-    let line = _ts() + " " + tag + " " + message;
-    return _emit(line);
+    return _emit(_line(level, message));
 
 fun debug(message)
     return log(0, message);
@@ -87,6 +128,35 @@ fun warn(message)
 fun error(message)
     return log(3, message);
 
+fun fatal(message)
+    log(3, message);
+    exit(1);
+    return false;
+
+fun debug2(a, b)
+    return debug(a + _log_sep + b);
+
+fun info2(a, b)
+    return info(a + _log_sep + b);
+
+fun warn2(a, b)
+    return warn(a + _log_sep + b);
+
+fun error2(a, b)
+    return error(a + _log_sep + b);
+
+fun debug3(a, b, c)
+    return debug(a + _log_sep + b + _log_sep + c);
+
+fun info3(a, b, c)
+    return info(a + _log_sep + b + _log_sep + c);
+
+fun warn3(a, b, c)
+    return warn(a + _log_sep + b + _log_sep + c);
+
+fun error3(a, b, c)
+    return error(a + _log_sep + b + _log_sep + c);
+
 fun kv(level, key, value)
     return log(level, key + "=" + value);
 
@@ -98,4 +168,86 @@ fun kv_warn(key, value)
 
 fun kv_error(key, value)
     return kv(3, key, value);
+
+fun kv_debug(key, value)
+    return kv(0, key, value);
+
+fun info_kv(key, value)
+    return kv_info(key, value);
+
+fun warn_kv(key, value)
+    return kv_warn(key, value);
+
+fun error_kv(key, value)
+    return kv_error(key, value);
+
+fun debug_kv(key, value)
+    return kv_debug(key, value);
+
+fun kv_num(level, key, n)
+    return log(level, key + "=" + num_to_str(n));
+
+fun kv_bool(level, key, b)
+    if b
+        return log(level, key + "=true");
+    return log(level, key + "=false");
+
+fun kv_any(level, key, v)
+    // fallback: stringify via json (pode virar string/num/bool/obj)
+    let s = json::stringify(v);
+    return log(level, key + "=" + s);
+
+fun info_json(label, v)
+    let s = json::stringify(v);
+    return info(label + _log_sep + s);
+
+fun warn_json(label, v)
+    let s = json::stringify(v);
+    return warn(label + _log_sep + s);
+
+fun error_json(label, v)
+    let s = json::stringify(v);
+    return error(label + _log_sep + s);
+
+fun debug_json(label, v)
+    let s = json::stringify(v);
+    return debug(label + _log_sep + s);
+
+fun with_level(level, message)
+    // helper: log respeitando filtro
+    return log(level, message);
+
+fun temporarily_set_level(level)
+    let prev = _log_level;
+    _log_level = level;
+    return prev;
+
+fun restore_level(prev)
+    _log_level = prev;
+    return true;
+
+fun trace(message)
+    // alias de debug (para quem prefere)
+    return debug(message);
+
+fun notice(message)
+    // alias de info
+    return info(message);
+
+fun panic(message)
+    // alias de fatal
+    return fatal(message);
+
+fun to_file(path, message)
+    // util: escreve log direto num arquivo sem mexer no estado global
+    sfs::append(path, message + "\n");
+    return true;
+
+fun open_session(prefix)
+    set_prefix(prefix);
+    return true;
+
+fun close_session()
+    set_prefix("");
+    return true;
 

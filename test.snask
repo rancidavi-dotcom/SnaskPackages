@@ -10,11 +10,18 @@ import "log";
 mut _tests_total = 0;
 mut _tests_ok = 0;
 mut _tests_fail = 0;
+mut _tests_skip = 0;
+mut _tests_todo = 0;
+mut _tests_exit_on_fail = false;
+mut _tests_section = "";
 
 fun begin()
     _tests_total = 0;
     _tests_ok = 0;
     _tests_fail = 0;
+    _tests_skip = 0;
+    _tests_todo = 0;
+    _tests_section = "";
     log::info("tests: begin");
     return true;
 
@@ -27,17 +34,60 @@ fun passed()
 fun failed()
     return _tests_fail;
 
+fun skipped()
+    return _tests_skip;
+
+fun todo_count()
+    return _tests_todo;
+
+fun set_exit_on_fail(on)
+    _tests_exit_on_fail = on;
+    return true;
+
+fun get_exit_on_fail()
+    return _tests_exit_on_fail;
+
+fun section(name)
+    _tests_section = name;
+    log::info("section: " + name);
+    return true;
+
+fun clear_section()
+    _tests_section = "";
+    return true;
+
+fun _name(name)
+    if is_nil(_tests_section)
+        return name;
+    if _tests_section == ""
+        return name;
+    return _tests_section + " :: " + name;
+
 fun _ok(name)
     _tests_total = _tests_total + 1;
     _tests_ok = _tests_ok + 1;
-    log::info("PASS " + name);
+    log::info("PASS " + _name(name));
     return true;
 
 fun _fail(name, msg)
     _tests_total = _tests_total + 1;
     _tests_fail = _tests_fail + 1;
-    log::error("FAIL " + name + " :: " + msg);
+    log::error("FAIL " + _name(name) + " :: " + msg);
+    if _tests_exit_on_fail
+        exit(1);
     return false;
+
+fun _skip(name, msg)
+    _tests_total = _tests_total + 1;
+    _tests_skip = _tests_skip + 1;
+    log::warn("SKIP " + _name(name) + " :: " + msg);
+    return true;
+
+fun _todo(name, msg)
+    _tests_total = _tests_total + 1;
+    _tests_todo = _tests_todo + 1;
+    log::warn("TODO " + _name(name) + " :: " + msg);
+    return true;
 
 fun check(name, cond)
     if cond
@@ -62,6 +112,16 @@ fun assert_ne(name, a, b)
         return _ok(name);
     return _fail(name, "expected ne");
 
+fun assert_true(name, v)
+    if v
+        return _ok(name);
+    return _fail(name, "expected true");
+
+fun assert_false(name, v)
+    if not v
+        return _ok(name);
+    return _fail(name, "expected false");
+
 fun assert_nil(name, v)
     if is_nil(v)
         return _ok(name);
@@ -72,12 +132,103 @@ fun assert_not_nil(name, v)
         return _ok(name);
     return _fail(name, "expected not nil");
 
+fun skip(name, msg)
+    return _skip(name, msg);
+
+fun todo(name, msg)
+    return _todo(name, msg);
+
+fun fail(name, msg)
+    return _fail(name, msg);
+
+fun pass(name)
+    return _ok(name);
+
+fun check_eq(name, a, b)
+    return assert_eq(name, a, b);
+
+fun check_ne(name, a, b)
+    return assert_ne(name, a, b);
+
+fun check_true(name, v)
+    return assert_true(name, v);
+
+fun check_false(name, v)
+    return assert_false(name, v);
+
+fun check_nil(name, v)
+    return assert_nil(name, v);
+
+fun check_not_nil(name, v)
+    return assert_not_nil(name, v);
+
+fun assert_lt(name, a, b)
+    if a < b
+        return _ok(name);
+    return _fail(name, "expected a < b");
+
+fun assert_le(name, a, b)
+    if a <= b
+        return _ok(name);
+    return _fail(name, "expected a <= b");
+
+fun assert_gt(name, a, b)
+    if a > b
+        return _ok(name);
+    return _fail(name, "expected a > b");
+
+fun assert_ge(name, a, b)
+    if a >= b
+        return _ok(name);
+    return _fail(name, "expected a >= b");
+
+fun check_lt(name, a, b)
+    return assert_lt(name, a, b);
+
+fun check_le(name, a, b)
+    return assert_le(name, a, b);
+
+fun check_gt(name, a, b)
+    return assert_gt(name, a, b);
+
+fun check_ge(name, a, b)
+    return assert_ge(name, a, b);
+
+fun assert_between(name, x, lo, hi)
+    if x >= lo and x <= hi
+        return _ok(name);
+    return _fail(name, "expected lo <= x <= hi");
+
+fun check_between(name, x, lo, hi)
+    return assert_between(name, x, lo, hi);
+
+fun assert_str(name, v)
+    if is_str(v)
+        return _ok(name);
+    return _fail(name, "expected string");
+
+fun assert_obj(name, v)
+    if is_obj(v)
+        return _ok(name);
+    return _fail(name, "expected object");
+
+fun check_str(name, v)
+    return assert_str(name, v);
+
+fun check_obj(name, v)
+    return assert_obj(name, v);
+
 fun summary()
-    return "total=" + num_to_str(_tests_total) + " ok=" + num_to_str(_tests_ok) + " fail=" + num_to_str(_tests_fail);
+    return "total=" + num_to_str(_tests_total) + " ok=" + num_to_str(_tests_ok) + " fail=" + num_to_str(_tests_fail) + " skip=" + num_to_str(_tests_skip) + " todo=" + num_to_str(_tests_todo);
+
+fun ok()
+    return _tests_fail == 0;
+
+fun has_failures()
+    return _tests_fail > 0;
 
 fun end()
     log::info("tests: " + summary());
     if _tests_fail > 0
         exit(1);
     return true;
-
