@@ -14,6 +14,26 @@
             "version": "1.0.0",
             "url": "requests.snask",
             "description": "Biblioteca HTTP completa para Snask (GET, POST, PUT, DELETE, PATCH)."
+        },
+        "json": {
+            "version": "1.0.0",
+            "url": "json.snask",
+            "description": "Biblioteca JSON - parse, stringify, pretty, get/set e helpers de leitura/escrita de arquivos."
+        },
+        "os": {
+            "version": "1.0.0",
+            "url": "os.snask",
+            "description": "Biblioteca OS - helpers de sistema, env, tempo e wrappers de arquivo."
+        },
+        "blaze": {
+            "version": "0.2.0",
+            "url": "blaze.snask",
+            "description": "Blaze - micro web framework estilo Flask (router simples + servidor HTTP)."
+        },
+        "blaze_auth": {
+            "version": "0.2.0",
+            "url": "blaze_auth.snask",
+            "description": "Blaze Auth - autenticação local + sessões/cookies; stubs para Google OAuth."
         }
     }
 }
