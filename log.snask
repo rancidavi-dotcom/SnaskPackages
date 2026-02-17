@@ -174,16 +174,16 @@ fun _fields_str()
     return s;
 
 fun _line(level, message)
-    let tag = level_name(level);
-    let p = _prefix();
-    let f = _fields_str();
+    let tag = log::level_name(level);
+    let p = log::_prefix();
+    let f = log::_fields_str();
     if p == "" and f == ""
-        return _ts() + _log_sep + tag + _log_sep + message;
+        return log::_ts() + _log_sep + tag + _log_sep + message;
     if p != "" and f == ""
-        return _ts() + _log_sep + tag + _log_sep + p + _log_sep + message;
+        return log::_ts() + _log_sep + tag + _log_sep + p + _log_sep + message;
     if p == "" and f != ""
-        return _ts() + _log_sep + tag + _log_sep + f + _log_sep + message;
-    return _ts() + _log_sep + tag + _log_sep + p + _log_sep + f + _log_sep + message;
+        return log::_ts() + _log_sep + tag + _log_sep + f + _log_sep + message;
+    return log::_ts() + _log_sep + tag + _log_sep + p + _log_sep + f + _log_sep + message;
 
 fun _rotate_if_needed()
     if is_nil(_log_file)
@@ -197,9 +197,9 @@ fun _rotate_if_needed()
         return false;
 
     // rotate: .(keep..1)
-    let i = _log_rotate_keep;
+    mut i = _log_rotate_keep;
     while i >= 1
-        let src = _log_file;
+        mut src = _log_file;
         if i > 1
             src = _log_file + "." + num_to_str(i - 1);
         let dst = _log_file + "." + num_to_str(i);
@@ -214,7 +214,7 @@ fun _emit(line)
     if _log_console
         print(line);
     if not is_nil(_log_file)
-        _rotate_if_needed();
+        log::_rotate_if_needed();
         sfs::append(_log_file, line + "\n");
     if _log_buffer_enabled
         if is_nil(_log_buffer)
@@ -228,108 +228,108 @@ fun log(level, message)
         return false;
     if level < _log_level
         return false;
-    return _emit(_line(level, message));
+    return log::_emit(log::_line(level, message));
 
 fun debug(message)
-    return log(0, message);
+    return log::log(0, message);
 
 fun info(message)
-    return log(1, message);
+    return log::log(1, message);
 
 fun warn(message)
-    return log(2, message);
+    return log::log(2, message);
 
 fun error(message)
-    return log(3, message);
+    return log::log(3, message);
 
 fun fatal(message)
-    log(3, message);
+    log::log(3, message);
     exit(1);
     return false;
 
 fun debug2(a, b)
-    return debug(a + _log_sep + b);
+    return log::debug(a + _log_sep + b);
 
 fun info2(a, b)
-    return info(a + _log_sep + b);
+    return log::info(a + _log_sep + b);
 
 fun warn2(a, b)
-    return warn(a + _log_sep + b);
+    return log::warn(a + _log_sep + b);
 
 fun error2(a, b)
-    return error(a + _log_sep + b);
+    return log::error(a + _log_sep + b);
 
 fun debug3(a, b, c)
-    return debug(a + _log_sep + b + _log_sep + c);
+    return log::debug(a + _log_sep + b + _log_sep + c);
 
 fun info3(a, b, c)
-    return info(a + _log_sep + b + _log_sep + c);
+    return log::info(a + _log_sep + b + _log_sep + c);
 
 fun warn3(a, b, c)
-    return warn(a + _log_sep + b + _log_sep + c);
+    return log::warn(a + _log_sep + b + _log_sep + c);
 
 fun error3(a, b, c)
-    return error(a + _log_sep + b + _log_sep + c);
+    return log::error(a + _log_sep + b + _log_sep + c);
 
 fun kv(level, key, value)
-    return log(level, key + "=" + value);
+    return log::log(level, key + "=" + value);
 
 fun kv_info(key, value)
-    return kv(1, key, value);
+    return log::kv(1, key, value);
 
 fun kv_warn(key, value)
-    return kv(2, key, value);
+    return log::kv(2, key, value);
 
 fun kv_error(key, value)
-    return kv(3, key, value);
+    return log::kv(3, key, value);
 
 fun kv_debug(key, value)
-    return kv(0, key, value);
+    return log::kv(0, key, value);
 
 fun info_kv(key, value)
-    return kv_info(key, value);
+    return log::kv_info(key, value);
 
 fun warn_kv(key, value)
-    return kv_warn(key, value);
+    return log::kv_warn(key, value);
 
 fun error_kv(key, value)
-    return kv_error(key, value);
+    return log::kv_error(key, value);
 
 fun debug_kv(key, value)
-    return kv_debug(key, value);
+    return log::kv_debug(key, value);
 
 fun kv_num(level, key, n)
-    return log(level, key + "=" + num_to_str(n));
+    return log::log(level, key + "=" + num_to_str(n));
 
 fun kv_bool(level, key, b)
     if b
-        return log(level, key + "=true");
-    return log(level, key + "=false");
+        return log::log(level, key + "=true");
+    return log::log(level, key + "=false");
 
 fun kv_any(level, key, v)
     // fallback: stringify via json (pode virar string/num/bool/obj)
     let s = json::stringify(v);
-    return log(level, key + "=" + s);
+    return log::log(level, key + "=" + s);
 
 fun info_json(label, v)
     let s = json::stringify(v);
-    return info(label + _log_sep + s);
+    return log::info(label + _log_sep + s);
 
 fun warn_json(label, v)
     let s = json::stringify(v);
-    return warn(label + _log_sep + s);
+    return log::warn(label + _log_sep + s);
 
 fun error_json(label, v)
     let s = json::stringify(v);
-    return error(label + _log_sep + s);
+    return log::error(label + _log_sep + s);
 
 fun debug_json(label, v)
     let s = json::stringify(v);
-    return debug(label + _log_sep + s);
+    return log::debug(label + _log_sep + s);
 
 fun with_level(level, message)
     // helper: log respeitando filtro
-    return log(level, message);
+    return log::log(level, message);
 
 fun temporarily_set_level(level)
     let prev = _log_level;
@@ -342,15 +342,15 @@ fun restore_level(prev)
 
 fun trace(message)
     // alias de debug (para quem prefere)
-    return debug(message);
+    return log::debug(message);
 
 fun notice(message)
     // alias de info
-    return info(message);
+    return log::info(message);
 
 fun panic(message)
     // alias de fatal
-    return fatal(message);
+    return log::fatal(message);
 
 fun to_file(path, message)
     // util: escreve log direto num arquivo sem mexer no estado global
@@ -358,21 +358,21 @@ fun to_file(path, message)
     return true;
 
 fun open_session(prefix)
-    set_prefix(prefix);
+    log::set_prefix(prefix);
     return true;
 
 fun close_session()
-    set_prefix("");
+    log::set_prefix("");
     return true;
 
 fun capture_begin()
     // habilita buffer e limpa
-    enable_buffer(true);
-    clear_buffer();
+    log::enable_buffer(true);
+    log::clear_buffer();
     return true;
 
 fun capture_end()
     // retorna snapshot do buffer (obj)
-    let b = buffer_all();
-    enable_buffer(false);
+    let b = log::buffer_all();
+    log::enable_buffer(false);
     return b;

@@ -92,7 +92,7 @@ fun _fail_push(name)
     if is_nil(_tests_failed_names)
         _tests_failed_names = json::new_object();
         _tests_failed_len = 0;
-    json::set(_tests_failed_names, num_to_str(_tests_failed_len), _name(name));
+    json::set(_tests_failed_names, num_to_str(_tests_failed_len), test::_name(name));
     _tests_failed_len = _tests_failed_len + 1;
     return true;
 
@@ -102,14 +102,14 @@ fun failed_names()
 fun _ok(name)
     _tests_total = _tests_total + 1;
     _tests_ok = _tests_ok + 1;
-    log::info("PASS " + _name(name));
+    log::info("PASS " + test::_name(name));
     return true;
 
 fun _fail(name, msg)
     _tests_total = _tests_total + 1;
     _tests_fail = _tests_fail + 1;
-    log::error("FAIL " + _name(name) + " :: " + msg);
-    _fail_push(name);
+    log::error("FAIL " + test::_name(name) + " :: " + msg);
+    test::_fail_push(name);
     if _tests_exit_on_fail
         exit(1);
     return false;
@@ -117,143 +117,143 @@ fun _fail(name, msg)
 fun _skip(name, msg)
     _tests_total = _tests_total + 1;
     _tests_skip = _tests_skip + 1;
-    log::warn("SKIP " + _name(name) + " :: " + msg);
+    log::warn("SKIP " + test::_name(name) + " :: " + msg);
     return true;
 
 fun _todo(name, msg)
     _tests_total = _tests_total + 1;
     _tests_todo = _tests_todo + 1;
-    log::warn("TODO " + _name(name) + " :: " + msg);
+    log::warn("TODO " + test::_name(name) + " :: " + msg);
     return true;
 
 fun check(name, cond)
     if cond
-        return _ok(name);
-    return _fail(name, "cond=false");
+        return test::_ok(name);
+    return test::_fail(name, "cond=false");
 
 fun assert(name, cond)
     // assert é igual check, mas encerra em caso de falha
     if cond
-        return _ok(name);
-    _fail(name, "assertion failed");
+        return test::_ok(name);
+    test::_fail(name, "assertion failed");
     exit(1);
     return false;
 
 fun assert_eq(name, a, b)
     if a == b
-        return _ok(name);
-    return _fail(name, "expected eq");
+        return test::_ok(name);
+    return test::_fail(name, "expected eq");
 
 fun assert_ne(name, a, b)
     if a != b
-        return _ok(name);
-    return _fail(name, "expected ne");
+        return test::_ok(name);
+    return test::_fail(name, "expected ne");
 
 fun assert_true(name, v)
     if v
-        return _ok(name);
-    return _fail(name, "expected true");
+        return test::_ok(name);
+    return test::_fail(name, "expected true");
 
 fun assert_false(name, v)
     if not v
-        return _ok(name);
-    return _fail(name, "expected false");
+        return test::_ok(name);
+    return test::_fail(name, "expected false");
 
 fun assert_nil(name, v)
     if is_nil(v)
-        return _ok(name);
-    return _fail(name, "expected nil");
+        return test::_ok(name);
+    return test::_fail(name, "expected nil");
 
 fun assert_not_nil(name, v)
     if not is_nil(v)
-        return _ok(name);
-    return _fail(name, "expected not nil");
+        return test::_ok(name);
+    return test::_fail(name, "expected not nil");
 
 fun skip(name, msg)
-    return _skip(name, msg);
+    return test::_skip(name, msg);
 
 fun todo(name, msg)
-    return _todo(name, msg);
+    return test::_todo(name, msg);
 
 fun fail(name, msg)
-    return _fail(name, msg);
+    return test::_fail(name, msg);
 
 fun pass(name)
-    return _ok(name);
+    return test::_ok(name);
 
 fun check_eq(name, a, b)
-    return assert_eq(name, a, b);
+    return test::assert_eq(name, a, b);
 
 fun check_ne(name, a, b)
-    return assert_ne(name, a, b);
+    return test::assert_ne(name, a, b);
 
 fun check_true(name, v)
-    return assert_true(name, v);
+    return test::assert_true(name, v);
 
 fun check_false(name, v)
-    return assert_false(name, v);
+    return test::assert_false(name, v);
 
 fun check_nil(name, v)
-    return assert_nil(name, v);
+    return test::assert_nil(name, v);
 
 fun check_not_nil(name, v)
-    return assert_not_nil(name, v);
+    return test::assert_not_nil(name, v);
 
 fun assert_lt(name, a, b)
     if a < b
-        return _ok(name);
-    return _fail(name, "expected a < b");
+        return test::_ok(name);
+    return test::_fail(name, "expected a < b");
 
 fun assert_le(name, a, b)
     if a <= b
-        return _ok(name);
-    return _fail(name, "expected a <= b");
+        return test::_ok(name);
+    return test::_fail(name, "expected a <= b");
 
 fun assert_gt(name, a, b)
     if a > b
-        return _ok(name);
-    return _fail(name, "expected a > b");
+        return test::_ok(name);
+    return test::_fail(name, "expected a > b");
 
 fun assert_ge(name, a, b)
     if a >= b
-        return _ok(name);
-    return _fail(name, "expected a >= b");
+        return test::_ok(name);
+    return test::_fail(name, "expected a >= b");
 
 fun check_lt(name, a, b)
-    return assert_lt(name, a, b);
+    return test::assert_lt(name, a, b);
 
 fun check_le(name, a, b)
-    return assert_le(name, a, b);
+    return test::assert_le(name, a, b);
 
 fun check_gt(name, a, b)
-    return assert_gt(name, a, b);
+    return test::assert_gt(name, a, b);
 
 fun check_ge(name, a, b)
-    return assert_ge(name, a, b);
+    return test::assert_ge(name, a, b);
 
 fun assert_between(name, x, lo, hi)
     if x >= lo and x <= hi
-        return _ok(name);
-    return _fail(name, "expected lo <= x <= hi");
+        return test::_ok(name);
+    return test::_fail(name, "expected lo <= x <= hi");
 
 fun check_between(name, x, lo, hi)
-    return assert_between(name, x, lo, hi);
+    return test::assert_between(name, x, lo, hi);
 
 fun assert_str(name, v)
     if is_str(v)
-        return _ok(name);
-    return _fail(name, "expected string");
+        return test::_ok(name);
+    return test::_fail(name, "expected string");
 
 fun assert_obj(name, v)
     if is_obj(v)
-        return _ok(name);
-    return _fail(name, "expected object");
+        return test::_ok(name);
+    return test::_fail(name, "expected object");
 
 fun check_str(name, v)
-    return assert_str(name, v);
+    return test::assert_str(name, v);
 
 fun check_obj(name, v)
-    return assert_obj(name, v);
+    return test::assert_obj(name, v);
 
 fun summary()
     return "total=" + num_to_str(_tests_total) + " ok=" + num_to_str(_tests_ok) + " fail=" + num_to_str(_tests_fail) + " skip=" + num_to_str(_tests_skip) + " todo=" + num_to_str(_tests_todo);
@@ -286,15 +286,15 @@ fun snapshot(name, value_str)
     let p = _snap_file(name);
     if _tests_update_snapshots or not sfs_exists(p)
         sfs_write(p, value_str);
-        return _ok("snapshot: " + name);
+        return test::_ok("snapshot: " + name);
     let cur = sfs_read(p);
     if cur == value_str
-        return _ok("snapshot: " + name);
-    return _fail("snapshot: " + name, "snapshot mismatch");
+        return test::_ok("snapshot: " + name);
+    return test::_fail("snapshot: " + name, "snapshot mismatch");
 
 fun snapshot_update(name, value_str)
     let prev = _tests_update_snapshots;
     _tests_update_snapshots = true;
-    let r = snapshot(name, value_str);
+    let r = test::snapshot(name, value_str);
     _tests_update_snapshots = prev;
     return r;
