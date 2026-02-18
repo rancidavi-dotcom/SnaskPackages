@@ -85,6 +85,11 @@
       "url": "sqlite.snask",
       "version": "0.1.0"
     },
+    "string": {
+      "description": "Biblioteca Primordial de manipulação de strings para Snask.",
+      "url": "string.snask",
+      "version": "1.0.0"
+    },
     "utils": {
       "description": "Biblioteca padrão de utilitários (Constantes e Funções) para Snask.",
       "url": "utils.snask",
