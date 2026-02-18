@@ -135,23 +135,6 @@ fun labeled_entry(parent, label_text, placeholder)
     gui::add_expand(r, e);
     return e;
 
-fun buttons3(parent, text1, handler1, text2, handler2, text3, handler3)
-    let r = gui::hbox();
-    gui::add(parent, r);
-    if not is_nil(text1)
-        let b1 = gui::button(text1);
-        gui::on_click(b1, handler1);
-        gui::add_expand(r, b1);
-    if not is_nil(text2)
-        let b2 = gui::button(text2);
-        gui::on_click(b2, handler2);
-        gui::add_expand(r, b2);
-    if not is_nil(text3)
-        let b3 = gui::button(text3);
-        gui::on_click(b3, handler3);
-        gui::add_expand(r, b3);
-    return r;
-
 fun css(text)
     return gui_css(text);
 
@@ -182,3 +165,11 @@ fun set_margin(widget, m)
 fun icon(name, px)
     return gui_icon(name, px);
 
+fun listbox()
+    return gui_listbox();
+
+fun list_add_text(list, text)
+    return gui_list_add_text(list, text);
+
+fun on_select_ctx(list, handler, ctx)
+    return gui_on_select_ctx(list, handler, ctx);
