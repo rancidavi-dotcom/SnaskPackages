@@ -151,3 +151,34 @@ fun buttons3(parent, text1, handler1, text2, handler2, text3, handler3)
         gui::on_click(b3, handler3);
         gui::add_expand(r, b3);
     return r;
+
+fun css(text)
+    return gui_css(text);
+
+fun add_class(widget, class_name)
+    return gui_add_class(widget, class_name);
+
+fun eventbox()
+    return gui_eventbox();
+
+fun on_tap_ctx(widget, handler, ctx_str)
+    return gui_on_tap_ctx(widget, handler, ctx_str);
+
+fun flowbox()
+    return gui_flowbox();
+
+fun flow_add(flow, child)
+    return gui_flow_add(flow, child);
+
+fun scrolled()
+    return gui_scrolled();
+
+fun frame()
+    return gui_frame();
+
+fun set_margin(widget, m)
+    return gui_set_margin(widget, m);
+
+fun icon(name, px)
+    return gui_icon(name, px);
+
