@@ -173,3 +173,7 @@ fun list_add_text(lst_widget, text)
 
 fun on_select_ctx(lst_widget, handler, ctx)
     return gui_on_select_ctx(lst_widget, handler, ctx);
+
+fun textview()
+    return gui_textview();
+
