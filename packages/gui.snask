@@ -168,8 +168,8 @@ fun icon(name, px)
 fun listbox()
     return gui_listbox();
 
-fun list_add_text(list, text)
-    return gui_list_add_text(list, text);
+fun list_add_text(lst_widget, text)
+    return gui_list_add_text(lst_widget, text);
 
-fun on_select_ctx(list, handler, ctx)
-    return gui_on_select_ctx(list, handler, ctx);
+fun on_select_ctx(lst_widget, handler, ctx)
+    return gui_on_select_ctx(lst_widget, handler, ctx);
