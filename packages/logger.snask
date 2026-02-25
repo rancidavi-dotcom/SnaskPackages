@@ -7,7 +7,7 @@ import "sfs";
 // níveis: 0=debug 1=info 2=warn 3=error
 mut _logger_level = 2;
 mut _logger_use_color = true;
-mut _logger_file = nil;
+mut _logger_file = 0;
 mut _logger_time = true;
 
 fun version()
@@ -33,7 +33,7 @@ fun set_file(path)
     return true;
 
 fun clear_file()
-    _logger_file = nil;
+    _logger_file = 0;
     return true;
 
 fun _level_name(level)
@@ -60,7 +60,7 @@ fun _ts()
 
 fun _emit(line)
     print(line);
-    if not is_nil(_logger_file)
+    if not is_0(_logger_file)
         // newline manual
         sfs::append(_logger_file, line + "\n");
 

@@ -15,11 +15,11 @@ fun hbox_with(parent)
 fun row_buttons(parent, b1, b2, b3)
     let row = gui::hbox();
     gui::add(parent, row);
-    if not is_nil(b1)
+    if not is_0(b1)
         gui::add_expand(row, b1);
-    if not is_nil(b2)
+    if not is_0(b2)
         gui::add_expand(row, b2);
-    if not is_nil(b3)
+    if not is_0(b3)
         gui::add_expand(row, b3);
     return row;
 

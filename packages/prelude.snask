@@ -19,7 +19,7 @@ fun assert(cond, msg)
     return false;
 
 fun expect(value, msg)
-    if is_nil(value)
+    if is_0(value)
         print("Expect failed:", msg);
         exit(1);
     return value;
@@ -35,7 +35,7 @@ fun ok(value)
 fun err(message)
     let r = json::new_object();
     json::set(r, "ok", false);
-    json::set(r, "value", nil);
+    json::set(r, "value", 0);
     json::set(r, "error", message);
     return r;
 
@@ -44,7 +44,7 @@ fun unwrap(res)
         return json::get(res, "value");
     print("Unwrap error:", json::get(res, "error"));
     exit(1);
-    return nil;
+    return 0;
 
 fun unwrap_or(res, default_value)
     if json::get(res, "ok")
@@ -53,10 +53,10 @@ fun unwrap_or(res, default_value)
 
 // Nil ergonomics
 fun is_some(value)
-    return not is_nil(value);
+    return not is_0(value);
 
-fun unwrap_nil(value, msg)
-    if is_nil(value)
+fun unwrap_0(value, msg)
+    if is_0(value)
         print("Nil unwrap:", msg);
         exit(1);
     return value;
@@ -67,6 +67,6 @@ fun jget(o, key)
 
 fun path_get(o, key, default_value)
     let v = sjson::path_get(o, key);
-    if is_nil(v)
+    if is_0(v)
         return default_value;
     return v;

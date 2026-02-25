@@ -55,7 +55,7 @@ fun new_array()
 
 fun get_or(obj, key, default_value)
     let v = json_get(obj, key);
-    if v == nil
+    if v == 0
         return default_value;
     return v;
 
@@ -69,7 +69,7 @@ fun set_bool(obj, key, value)
     return json_set(obj, key, value);
 
 fun set_null(obj, key)
-    return json_set(obj, key, nil);
+    return json_set(obj, key, 0);
 
 fun write_file(path, obj)
     return sfs_write(path, json_stringify(obj));

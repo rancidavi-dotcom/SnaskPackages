@@ -7,17 +7,17 @@ import "json";
 
 mut _log_level = 1;
 // se string, também escreve no arquivo (append)
-mut _log_file = nil;
+mut _log_file = 0;
 mut _log_with_time = true;
 mut _log_prefix = "";
 mut _log_sep = " ";
 mut _log_console = true;
 mut _log_buffer_enabled = false;
 // json object: {"0":"...", "1":"..."}
-mut _log_buffer = nil;
+mut _log_buffer = 0;
 mut _log_buffer_len = 0;
 // json object: {"request_id":"...", ...}
-mut _log_fields = nil;
+mut _log_fields = 0;
 // 0 desliga
 mut _log_rotate_max_bytes = 0;
 // 0 desliga
@@ -64,7 +64,7 @@ fun set_file(path)
     return true;
 
 fun clear_file()
-    _log_file = nil;
+    _log_file = 0;
     return true;
 
 fun set_rotate(max_bytes, keep_files)
@@ -94,7 +94,7 @@ fun is_time_enabled()
 
 fun enable_buffer(on)
     _log_buffer_enabled = on;
-    if on and is_nil(_log_buffer)
+    if on and is_0(_log_buffer)
         _log_buffer = json::new_object();
         _log_buffer_len = 0;
     return true;
@@ -111,23 +111,23 @@ fun buffer_len()
     return _log_buffer_len;
 
 fun buffer_get(idx)
-    if is_nil(_log_buffer)
-        return nil;
+    if is_0(_log_buffer)
+        return 0;
     return json::get(_log_buffer, num_to_str(idx));
 
 fun buffer_all()
     return _log_buffer;
 
 fun set_field(key, value)
-    if is_nil(_log_fields)
+    if is_0(_log_fields)
         _log_fields = json::new_object();
     json::set(_log_fields, key, value);
     return true;
 
 fun clear_field(key)
-    if is_nil(_log_fields)
+    if is_0(_log_fields)
         return true;
-    json::set(_log_fields, key, nil);
+    json::set(_log_fields, key, 0);
     return true;
 
 fun clear_fields()
@@ -135,7 +135,7 @@ fun clear_fields()
     return true;
 
 fun fields()
-    if is_nil(_log_fields)
+    if is_0(_log_fields)
         _log_fields = json::new_object();
     return _log_fields;
 
@@ -158,14 +158,14 @@ fun _ts()
     return "[" + num_to_str(t) + "]";
 
 fun _prefix()
-    if is_nil(_log_prefix)
+    if is_0(_log_prefix)
         return "";
     if _log_prefix == ""
         return "";
     return _log_prefix;
 
 fun _fields_str()
-    if is_nil(_log_fields)
+    if is_0(_log_fields)
         return "";
     // stringify é suficiente; para logs humanos, vai como objeto em JSON.
     let s = json::stringify(_log_fields);
@@ -186,7 +186,7 @@ fun _line(level, message)
     return log::_ts() + _log_sep + tag + _log_sep + p + _log_sep + f + _log_sep + message;
 
 fun _rotate_if_needed()
-    if is_nil(_log_file)
+    if is_0(_log_file)
         return false;
     if _log_rotate_max_bytes <= 0 or _log_rotate_keep <= 0
         return false;
@@ -213,11 +213,11 @@ fun _rotate_if_needed()
 fun _emit(line)
     if _log_console
         print(line);
-    if not is_nil(_log_file)
+    if not is_0(_log_file)
         log::_rotate_if_needed();
         sfs::append(_log_file, line + "\n");
     if _log_buffer_enabled
-        if is_nil(_log_buffer)
+        if is_0(_log_buffer)
             _log_buffer = json::new_object();
         json::set(_log_buffer, num_to_str(_log_buffer_len), line);
         _log_buffer_len = _log_buffer_len + 1;

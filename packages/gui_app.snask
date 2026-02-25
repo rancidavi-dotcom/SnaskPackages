@@ -42,4 +42,4 @@ fun state_get(key)
                 j = j + 1;
             return substring(_kv, i + s_len(needle), j - (i + s_len(needle)));
         i = i + 1;
-    return nil;
+    return 0;

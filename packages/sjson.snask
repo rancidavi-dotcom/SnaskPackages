@@ -5,7 +5,7 @@ import "os";
 // JSON padrão do Snask (Go-like), sem quebrar a lib `json` existente.
 //
 // Representação:
-// - usa os mesmos valores do runtime (nil/bool/num/str/obj)
+// - usa os mesmos valores do runtime (0/bool/num/str/obj)
 // - objetos e arrays são SNASK_OBJ
 // - arrays são gerenciados por helpers nativos `sjson_arr_*`
 
@@ -17,13 +17,13 @@ fun decode(text)
 fun decode_safe(text)
     return json_parse_ex(text);
 
-// Retorna value ou nil (e também imprime erro se falhar)
+// Retorna value ou 0 (e também imprime erro se falhar)
 fun decode_strict(text)
     let r = json_parse_ex(text);
     if json::get(r, "ok")
         return json::get(r, "value");
     print("Sjson decode error:", json::get(r, "error"));
-    return nil;
+    return 0;
 
 fun encode(value)
     return json::stringify(value);
@@ -36,7 +36,7 @@ fun type_of(value)
 
 // ---------- Values ----------
 fun null()
-    return nil;
+    return 0;
 
 fun bool(v)
     return v;
@@ -62,7 +62,7 @@ fun get(o, key)
 
 fun get_or(o, key, default_value)
     let v = json::get(o, key);
-    if is_nil(v)
+    if is_0(v)
         return default_value;
     return v;
 

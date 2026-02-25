@@ -130,7 +130,7 @@ fun labeled_entry(parent, label_text, placeholder)
     let lbl = gui::label(label_text);
     gui::add(r, lbl);
     let e = gui::entry();
-    if not is_nil(placeholder)
+    if not is_0(placeholder)
         gui::set_placeholder(e, placeholder);
     gui::add_expand(r, e);
     return e;

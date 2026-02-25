@@ -68,10 +68,10 @@ fun register_local(cfg, username, password)
 fun verify_local(cfg, username, password)
     let users = blaze_auth::load_users(cfg);
     let u = json::get(users, username);
-    if is_nil(u)
+    if is_0(u)
         return false;
     let h = json::get(u, "password_hash");
-    if is_nil(h)
+    if is_0(h)
         return false;
     return auth_verify_password(password, h);
 
@@ -123,4 +123,4 @@ fun google_login_url(client_id, redirect_uri)
     return "not_implemented";
 
 fun google_exchange_code(client_id, client_secret, redirect_uri, code)
-    return nil;
+    return 0;
